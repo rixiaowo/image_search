@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from utilss import MilvusManager
 import os
 from io import BytesIO
@@ -19,6 +19,11 @@ def decode_image(img_data):
 @app.route('/', methods=['GET'])
 def index():
     return open('index.html').read()
+
+
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory('uploads', filename)
 
 
 @app.route('/create', methods=['POST'])
@@ -45,8 +50,8 @@ def insert_data_from_folder():
         id += 1
         img_name = item["name"]
         img_data = item["data"]
-        img = decode_image(img_data)
-        milvus.insert_data(id, img, img_name)
+        # img = decode_image(img_data)
+        milvus.insert_data(id, img_data, img_name)
 
     return jsonify({"message": f"从文件夹插入了{len(imgDataList)}张图片"}), 200
 

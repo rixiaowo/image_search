@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Milvus Interface</title>
     <div id="progressContainer"></div>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -149,7 +149,11 @@
         function displaySearchResults(results) {
             let htmlContent = '<h3>搜索结果:</h3>';
             results.forEach(result => {
-                htmlContent += `<p>图像名: ${result.image_name}</p>`;
+                htmlContent += `
+            <div>
+                <img src="/uploads/${result.filename}" alt="${result.image_name}" width="100">  <!-- 加载图片 -->
+                <p>图像名: ${result.image_name}</p>
+            </div>`;
             });
             $('#searchResults').html(htmlContent);
         }
